@@ -1,0 +1,30 @@
+namespace: csai
+
+operation:
+  name: multiply_random_numbers
+  
+  inputs:
+    - min:
+        default: '1'
+        required: false
+    - max:
+        default: '100'
+        required: false
+        
+  python_action:
+    script: |
+      import random
+      
+      min_val = int(min)
+      max_val = int(max)
+      
+      random_num_1 = random.randint(min_val, max_val)
+      random_num_2 = random.randint(min_val, max_val)
+      
+      result = random_num_1 * random_num_2
+      
+  outputs:
+    - result
+    
+  results:
+    - SUCCESS
