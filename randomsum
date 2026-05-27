@@ -1,0 +1,57 @@
+namespace: test1
+
+flow:
+  name: sum_two_randoms
+  
+  inputs:
+    - min: '1'
+    - max: '100'
+    
+  workflow:
+    - get_first_random:
+        do:
+          io.cloudslang.base.samples.math.generate_random_number:
+            - min: '${min}'
+            - max: '${max}'
+        publish:
+          # Save the standard output to a new variable for this flow
+          - rand1: '${random_number}'
+        navigate:
+          - FAILURE: on_failure
+          - SUCCESS: get_second_random
+          
+    - get_second_random:
+        do:
+          io.cloudslang.base.samples.math.generate_random_number:
+            - min: '${min}'
+            - max: '${max}'
+        publish:
+          # Save the second standard output
+          - rand2: '${random_number}'
+        navigate:
+          - FAILURE: on_failure
+          - SUCCESS: sum_numbers
+          
+    - sum_numbers:
+        do:
+          # Use the base content pack addition operation
+          io.cloudslang.base.math.add:
+            - value1: '${rand1}'
+            - value2: '${rand2}'
+        publish:
+          # The add operation outputs 'result' by default
+          - final_sum: '${result}'
+        navigate:
+          - FAILURE: on_failure
+          - SUCCESS: SUCCESS
+          
+  outputs:
+    # Output the final sum from the flow
+    - sum_result: '${final_sum}'
+    # Optional: Output the individual numbers so you can verify the math
+    - random_number_1: '${rand1}'
+    - random_number_2: '${rand2}'
+
+  results:
+    - SUCCESS
+    - FAILURE
