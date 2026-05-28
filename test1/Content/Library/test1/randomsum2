@@ -1,7 +1,7 @@
 namespace: test1
 
 flow:
-  name: sum_two_randoms
+  name: randomsum2
   
   inputs:
     - min: '1'
