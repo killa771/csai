@@ -5,7 +5,7 @@ flow:
     - min: '1'
     - max: '100'
   workflow:
-    - generate_random_number:
+    - generate_random_number1:
         do:
           io.cloudslang.base.samples.math.generate_random_number:
             - min: '${min}'
@@ -23,7 +23,7 @@ flow:
 extensions:
   graph:
     steps:
-      generate_random_number:
+      generate_random_number1:
         x: 240
         'y': 120
         navigate:
@@ -33,5 +33,5 @@ extensions:
     results:
       SUCCESS:
         17c2770a-f3a8-c040-63cb-ad0102bc51ca:
-          x: 480
+          x: 560
           'y': 120
